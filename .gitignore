@@ -104,5 +104,5 @@ gradle*
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
 
-grailsw*
 .java-version
+!grails-wrapper.jar
