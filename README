@@ -9,3 +9,9 @@ Install sdkman
 sdk use grails 3.2.3
 sdk use gradle 3.0
 sdk use groovy 2.4.7
+
+## Status
+
+Master latest build: [![Build Status](https://drone.io/github.com/leni-kirilov/cake-catalog-monolith/status.png)](https://drone.io/github.com/leni-kirilov/cake-catalog-monolith/latest)
+
+Heroku deployment per: http://webcache.googleusercontent.com/search?q=cache:yJo7bA8IfwUJ:davydotcom.com/blog/2015-05-31-running-grails-3-on-heroku+&cd=4&hl=en&ct=clnk&gl=bg
