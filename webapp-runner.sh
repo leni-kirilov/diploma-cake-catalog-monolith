@@ -3,7 +3,7 @@ echo 'Executing DB migrations'
 
 java -jar ./server/liquibase-core-3.5.3.jar \
     --driver=org.postgresql.Driver \
-    --classpath=$(ls build/libs/cake-catalog-monolith*.war) \
+    --classpath=$(ls ./build/libs/cake-catalog-monolith*.war) \
     --changeLogFile=changelog.xml \
     --url="$(echo $JDBC_DATABASE_URL)&ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory" migrate;
 
