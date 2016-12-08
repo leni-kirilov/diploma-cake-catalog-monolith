@@ -18,6 +18,6 @@ java -jar ../../server/liquibase-core-3.5.3.jar \
 echo ''
 echo 'Running app...'
 
-java $JAVA_OPTS -Dgrails.env=dev -jar ../../server/webapp-runner.jar --port 8000 *.war
+java $JAVA_OPTS -Dgrails.env=development -jar ../../server/webapp-runner.jar --port 8000 *.war
 
 cd ../..

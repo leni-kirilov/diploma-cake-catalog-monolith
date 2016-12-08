@@ -97,7 +97,7 @@ dataSource:
 environments:
     development:
         dataSource:
-            url: jdbc:mysql://localhost:3306/cake_catalog_monolith #&createDatabaseIfNotExist=true #;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+            url: jdbc:mysql://localhost:3306/cake_catalog_monolith
             pooled: true
             jmxExport: true
             driverClassName: com.mysql.jdbc.Driver
@@ -113,3 +113,12 @@ environments:
             dialect: org.hibernate.dialect.MySQL5InnoDBDialect
             username: sa
             password:
+    production1:
+        dataSource:
+            url: jdbc:postgresql://ec2-54-75-230-140.eu-west-1.compute.amazonaws.com:5432/d3bifn5ooqrvhe?user=kgmevmhljblkht&password=LEUEvRKfyeiNuOmUZDPshGGAqs&sslmode=require
+            driverClassName: org.postgresql.Driver
+            dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+            username: kgmevmhljblkht
+            password: LEUEvRKfyeiNuOmUZDPshGGAqs
+            pooled: true
+            jmxEnabled: true
