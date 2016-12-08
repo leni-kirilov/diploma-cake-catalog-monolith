@@ -57,7 +57,7 @@ dependencies {
     runtime "com.h2database:h2"
     runtime 'mysql:mysql-connector-java:5.1.11'
 
-    runtime 'postgresql:postgresql:8.4-702.jdbc3'
+    runtime 'org.postgresql:postgresql:9.2-1003-jdbc4'
     provided "org.springframework.boot:spring-boot-starter-tomcat"
 
     testCompile "org.grails:grails-plugin-testing"
