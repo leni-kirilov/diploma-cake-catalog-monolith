@@ -1,0 +1,69 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+
+  <changeSet author="leni.kirilov (generated)" id="create-table-cake-">
+
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <tableExists tableName="cake"/>
+      </not>
+    </preConditions>
+
+    <createTable tableName="cake">
+      <column autoIncrement="true" name="id" type="BIGINT">
+        <constraints primaryKey="true" primaryKeyName="cakePK"/>
+      </column>
+      <column name="version" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+
+
+  <changeSet author="leni.kirilov (generated)" id="create-table-user">
+
+    <preConditions onFail="MARK_RAN">
+      <not>
+        <tableExists tableName="user"/>
+      </not>
+    </preConditions>
+
+    <createTable tableName="user">
+      <column autoIncrement="true" name="id" type="BIGINT">
+        <constraints primaryKey="true" primaryKeyName="userPK"/>
+      </column>
+      <column name="version" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="email" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="name" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="password" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+
+
+  <changeSet author="leni.kirilov" id="add-sample-user">
+
+    <preConditions onFail="MARK_RAN">
+      <tableExists tableName="user"/>
+    </preConditions>
+
+    <insert tableName="user">
+      <column name="id">1</column>
+      <column name="version">1</column>
+      <column name="email">"test@email.com"</column>
+      <column name="name">"sample-name"</column>
+      <column name="password">"sample-password"</column>
+    </insert>
+  </changeSet>
+
+</databaseChangeLog>
