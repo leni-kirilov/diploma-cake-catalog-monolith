@@ -54,10 +54,11 @@ dependencies {
     profile "org.grails.profiles:web"
 
     runtime "com.bertramlabs.plugins:asset-pipeline-grails:2.11.6"
-    runtime "com.h2database:h2"
-    runtime 'mysql:mysql-connector-java:5.1.11'
 
+    runtime "com.h2database:h2"
     runtime 'org.postgresql:postgresql:9.2-1003-jdbc4'
+    runtime 'mysql:mysql-connector-java:5.1.36'
+
     provided "org.springframework.boot:spring-boot-starter-tomcat"
 
     testCompile "org.grails:grails-plugin-testing"
