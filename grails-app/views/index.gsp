@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title>Welcome to Grails</title>
+    <title>Cake wizard</title>
 
     <asset:link rel="icon" href="favicon.ico" type="image/x-ico" />
 </head>

@@ -103,3 +103,5 @@ gradle-app.setting
 
 .java-version
 !grails-wrapper.jar
+
+*.db
