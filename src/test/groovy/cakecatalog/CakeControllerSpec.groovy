@@ -58,7 +58,7 @@ class CakeControllerSpec extends Specification {
             controller.save(cake)
 
         then:"A redirect is issued to the show action"
-            response.redirectedUrl == '/cake/show/1'
+            response.redirectedUrl == "/cake/show/${cake.id}"
             controller.flash.message != null
             Cake.count() == 1
     }
@@ -123,7 +123,7 @@ class CakeControllerSpec extends Specification {
 
         then:"A redirect is issued to the show action"
             cake != null
-            response.redirectedUrl == "/cake/show/$cake.id"
+            response.redirectedUrl == "/cake/show/${cake.id}"
             flash.message != null
     }
 

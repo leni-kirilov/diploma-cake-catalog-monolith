@@ -54,7 +54,7 @@
   <changeSet author="leni.kirilov" id="add-sample-user">
 
     <preConditions onFail="MARK_RAN">
-      <tableExists tableName="cake"/>
+      <tableExists tableName="user"/>
     </preConditions>
 
     <insert tableName="user">
@@ -65,8 +65,11 @@
       <column name="password">"sample-password"</column>
     </insert>
   </changeSet>
-  
+
   <changeSet id="Cake-add properties" author="Leni.Kirilov">
+    <preConditions onFail="MARK_RAN">
+      <tableExists tableName="cake"/>
+    </preConditions>
     <addColumn tableName="cake">
       <column name="name" type="varchar(255)"/>
       <column name="description" type="varchar(1024)"/>

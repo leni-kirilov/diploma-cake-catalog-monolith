@@ -2,10 +2,10 @@ package cakecatalog
 
 class Cake {
 
-  String id
+  int id
   String name
   String description
-  String ownerId
+  int ownerId
   boolean isPublic
 
   static constraints = {
