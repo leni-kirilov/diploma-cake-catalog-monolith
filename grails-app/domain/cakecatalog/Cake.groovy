@@ -2,6 +2,12 @@ package cakecatalog
 
 class Cake {
 
-    static constraints = {
-    }
+  String id
+  String name
+  String description
+  String ownerId
+  boolean isPublic
+
+  static constraints = {
+  }
 }

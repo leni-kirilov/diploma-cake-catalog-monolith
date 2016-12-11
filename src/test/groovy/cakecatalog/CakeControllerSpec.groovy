@@ -3,19 +3,20 @@ package cakecatalog
 import grails.test.mixin.*
 import spock.lang.*
 
-@TestFor(UserController)
-@Mock(User)
-class UserControllerSpec extends Specification {
+@TestFor(CakeController)
+@Mock(Cake)
+class CakeControllerSpec extends Specification {
 
-    static int id = 0
+    static int id = 1
 
     def populateValidParams(params) {
         assert params != null
 
         params["id"] = id++
-        params["name"] = 'someValidName'
-        params["email"] = 'someValidName@bla.com'
-        params["password"] = 'top-secr3t'
+        params["name"] = 'Chocolate cake'
+        params["description"] = 'This cake consists of many choco flakes'
+        params["isPublic"] = false
+        params['ownerId'] = 12
     }
 
     void "Test the index action returns the correct model"() {
@@ -24,8 +25,8 @@ class UserControllerSpec extends Specification {
             controller.index()
 
         then:"The model is correct"
-            !model.userList
-            model.userCount == 0
+            !model.cakeList
+            model.cakeCount == 0
     }
 
     void "Test the create action returns the correct model"() {
@@ -33,7 +34,7 @@ class UserControllerSpec extends Specification {
             controller.create()
 
         then:"The model is correctly created"
-            model.user!= null
+            model.cake!= null
     }
 
     void "Test the save action correctly persists an instance"() {
@@ -41,25 +42,25 @@ class UserControllerSpec extends Specification {
         when:"The save action is executed with an invalid instance"
             request.contentType = FORM_CONTENT_TYPE
             request.method = 'POST'
-            def user = new User()
-            user.validate()
-            controller.save(user)
+            def cake = new Cake()
+            cake.validate()
+            controller.save(cake)
 
         then:"The create view is rendered again with the correct model"
-            model.user!= null
+            model.cake!= null
             view == 'create'
 
         when:"The save action is executed with a valid instance"
             response.reset()
             populateValidParams(params)
-            user = new User(params)
+            cake = new Cake(params)
 
-            controller.save(user)
+            controller.save(cake)
 
         then:"A redirect is issued to the show action"
-            response.redirectedUrl == '/user/show/1'
+            response.redirectedUrl == '/cake/show/1'
             controller.flash.message != null
-            User.count() == 1
+            Cake.count() == 1
     }
 
     void "Test that the show action returns the correct model"() {
@@ -71,11 +72,11 @@ class UserControllerSpec extends Specification {
 
         when:"A domain instance is passed to the show action"
             populateValidParams(params)
-            def user = new User(params)
-            controller.show(user)
+            def cake = new Cake(params)
+            controller.show(cake)
 
         then:"A model is populated containing the domain instance"
-            model.user == user
+            model.cake == cake
     }
 
     void "Test that the edit action returns the correct model"() {
@@ -87,11 +88,11 @@ class UserControllerSpec extends Specification {
 
         when:"A domain instance is passed to the edit action"
             populateValidParams(params)
-            def user = new User(params)
-            controller.edit(user)
+            def cake = new Cake(params)
+            controller.edit(cake)
 
         then:"A model is populated containing the domain instance"
-            model.user == user
+            model.cake == cake
     }
 
     void "Test the update action performs an update on a valid domain instance"() {
@@ -101,28 +102,28 @@ class UserControllerSpec extends Specification {
             controller.update(null)
 
         then:"A 404 error is returned"
-            response.redirectedUrl == '/user/index'
+            response.redirectedUrl == '/cake/index'
             flash.message != null
 
         when:"An invalid domain instance is passed to the update action"
             response.reset()
-            def user = new User()
-            user.validate()
-            controller.update(user)
+            def cake = new Cake()
+            cake.validate()
+            controller.update(cake)
 
         then:"The edit view is rendered again with the invalid instance"
             view == 'edit'
-            model.user == user
+            model.cake == cake
 
         when:"A valid domain instance is passed to the update action"
             response.reset()
             populateValidParams(params)
-            user = new User(params).save(flush: true)
-            controller.update(user)
+            cake = new Cake(params).save(flush: true)
+            controller.update(cake)
 
         then:"A redirect is issued to the show action"
-            user != null
-            response.redirectedUrl == "/user/show/$user.id"
+            cake != null
+            response.redirectedUrl == "/cake/show/$cake.id"
             flash.message != null
     }
 
@@ -133,23 +134,23 @@ class UserControllerSpec extends Specification {
             controller.delete(null)
 
         then:"A 404 is returned"
-            response.redirectedUrl == '/user/index'
+            response.redirectedUrl == '/cake/index'
             flash.message != null
 
         when:"A domain instance is created"
             response.reset()
             populateValidParams(params)
-            def user = new User(params).save(flush: true)
+            def cake = new Cake(params).save(flush: true)
 
         then:"It exists"
-            User.count() == 1
+            Cake.count() == 1
 
         when:"The domain instance is passed to the delete action"
-            controller.delete(user)
+            controller.delete(cake)
 
         then:"The instance is deleted"
-            User.count() == 0
-            response.redirectedUrl == '/user/index'
+            Cake.count() == 0
+            response.redirectedUrl == '/cake/index'
             flash.message != null
     }
 }
