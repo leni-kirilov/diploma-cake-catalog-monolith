@@ -4,91 +4,91 @@ import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
-class UserController {
+class CakeController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond User.list(params), model:[userCount: User.count()]
+        respond Cake.list(params), model:[cakeCount: Cake.count()]
     }
 
-    def show(User user) {
-        respond user
+    def show(Cake cake) {
+        respond cake
     }
 
     def create() {
-        respond new User(params)
+        respond new Cake(params)
     }
 
     @Transactional
-    def save(User user) {
-        if (user == null) {
+    def save(Cake cake) {
+        if (cake == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
 
-        if (user.hasErrors()) {
+        if (cake.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond user.errors, view:'create'
+            respond cake.errors, view:'create'
             return
         }
 
-        user.save flush:true
+        cake.save flush:true
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), user.id])
-                redirect user
+                flash.message = message(code: 'default.created.message', args: [message(code: 'cake.label', default: 'Cake'), cake.id])
+                redirect cake
             }
-            '*' { respond user, [status: CREATED] }
+            '*' { respond cake, [status: CREATED] }
         }
     }
 
-    def edit(User user) {
-        respond user
+    def edit(Cake cake) {
+        respond cake
     }
 
     @Transactional
-    def update(User user) {
-        if (user == null) {
+    def update(Cake cake) {
+        if (cake == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
 
-        if (user.hasErrors()) {
+        if (cake.hasErrors()) {
             transactionStatus.setRollbackOnly()
-            respond user.errors, view:'edit'
+            respond cake.errors, view:'edit'
             return
         }
 
-        user.save flush:true
+        cake.save flush:true
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'user.label', default: 'User'), user.id])
-                redirect user
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'cake.label', default: 'Cake'), cake.id])
+                redirect cake
             }
-            '*'{ respond user, [status: OK] }
+            '*'{ respond cake, [status: OK] }
         }
     }
 
     @Transactional
-    def delete(User user) {
+    def delete(Cake cake) {
 
-        if (user == null) {
+        if (cake == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
 
-        user.delete flush:true
+        cake.delete flush:true
 
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'user.label', default: 'User'), user.id])
+                flash.message = message(code: 'default.deleted.message', args: [message(code: 'cake.label', default: 'Cake'), cake.id])
                 redirect action:"index", method:"GET"
             }
             '*'{ render status: NO_CONTENT }
@@ -98,7 +98,7 @@ class UserController {
     protected void notFound() {
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), params.id])
+                flash.message = message(code: 'default.not.found.message', args: [message(code: 'cake.label', default: 'Cake'), params.id])
                 redirect action: "index", method: "GET"
             }
             '*'{ render status: NOT_FOUND }
