@@ -10,12 +10,12 @@ java -jar ../../server/liquibase-core-3.5.3.jar \
      --driver=org.postgresql.Driver \
      --classpath=$(ls *.war) \
      --changeLogFile=changelog.xml \
-     --url="jdbc:postgresql://ec2-54-75-230-140.eu-west-1.compute.amazonaws.com:5432/d3bifn5ooqrvhe?user=kgmevmhljblkht&password=LEUEvRKfyeiNuOmUZDPshGGAqs&sslmode=require&ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory" \
+     --url="jdbc:postgresql://ec2-54-228-255-234.eu-west-1.compute.amazonaws.com:5432/dbq2rvsu94nh6f?user=fpkxyggrntzlax&password=e7307ff88a46bf6731e1a7c8f6a3588cf00dcce8bfd143b32a2bc170a6c516e5&sslmode=require" \
      migrate
 
 echo ''
 echo 'Running app...'
 
-#java $JAVA_OPTS -Dgrails.env=production -jar ../../server/webapp-runner.jar --port 8000 *.war
+java $JAVA_OPTS -Dgrails.env=production -jar ../../server/webapp-runner.jar --port 8000 *.war
 
 cd ../..

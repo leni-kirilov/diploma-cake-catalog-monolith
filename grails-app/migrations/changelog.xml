@@ -27,11 +27,11 @@
 
     <preConditions onFail="MARK_RAN">
       <not>
-        <tableExists tableName="user"/>
+        <tableExists tableName="portal_user"/>
       </not>
     </preConditions>
 
-    <createTable tableName="user">
+    <createTable tableName="portal_user">
       <column autoIncrement="true" name="id" type="BIGINT">
         <constraints primaryKey="true" primaryKeyName="userPK"/>
       </column>
@@ -48,22 +48,6 @@
         <constraints nullable="false"/>
       </column>
     </createTable>
-  </changeSet>
-
-
-  <changeSet author="leni.kirilov" id="add-sample-user">
-
-    <preConditions onFail="MARK_RAN">
-      <tableExists tableName="user"/>
-    </preConditions>
-
-    <insert tableName="user">
-      <column name="id">1</column>
-      <column name="version">1</column>
-      <column name="email">"test@email.com"</column>
-      <column name="name">"sample-name"</column>
-      <column name="password">"sample-password"</column>
-    </insert>
   </changeSet>
 
   <changeSet id="Cake-add properties" author="Leni.Kirilov">

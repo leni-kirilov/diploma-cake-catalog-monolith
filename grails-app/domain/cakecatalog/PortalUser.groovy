@@ -1,12 +1,11 @@
 package cakecatalog
 
-class Cake {
+class PortalUser {
 
   long id
   String name
-  String description
-  int ownerId
-  boolean isPublic
+  String email
+  String password
 
   static constraints = {
   }
