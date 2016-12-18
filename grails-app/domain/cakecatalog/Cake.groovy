@@ -5,7 +5,7 @@ class Cake {
   long id
   String name
   String description
-  int ownerId
+  long ownerId
   boolean isPublic
 
   static constraints = {
