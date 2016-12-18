@@ -10,7 +10,6 @@
         <div class="nav" role="navigation">
             <ul>
                 <li><g:link controller="login" action="logout"><g:message code="Logout"/></g:link></li>
-                <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
             </ul>
         </div>
         <div id="list-portalUser" class="content scaffold-list" role="main">

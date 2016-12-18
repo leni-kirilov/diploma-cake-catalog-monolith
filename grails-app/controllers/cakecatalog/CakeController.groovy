@@ -24,7 +24,7 @@ class CakeController extends BaseController{
 
   //TODO move to service?
   private List<Cake> getVisibleCakes(Long ownerId = null) {
-    return Cake.createCriteria().list {
+    return Cake.createCriteria().listDistinct {
       or {
         if (ownerId) {
           eq('ownerId', ownerId)
