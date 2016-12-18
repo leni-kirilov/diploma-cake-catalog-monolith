@@ -26,7 +26,7 @@ class CakeControllerSpec extends Specification {
 
         then:"The model is correct"
             !model.cakeList
-            model.cakeCount == 0
+            model.cakeCount == null
     }
 
     void "Test the create action returns the correct model"() {

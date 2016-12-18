@@ -1,107 +1,129 @@
 package cakecatalog
 
-import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
+import static org.springframework.http.HttpStatus.CREATED
+import static org.springframework.http.HttpStatus.NOT_FOUND
+import static org.springframework.http.HttpStatus.NO_CONTENT
+import static org.springframework.http.HttpStatus.OK
+
 @Transactional(readOnly = true)
-class CakeController {
+class CakeController extends BaseController{
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+  static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond Cake.list(params), model:[cakeCount: Cake.count()]
+  def index(Integer max) {
+    PortalUser loggedUser = session['loggedUser']
+    if(!loggedUser){
+      redirect uri: '/' //TODO no such email/password; 404
+      return
+    }
+    List<Cake> cakes = getVisibleCakes(session['loggedUser'].id as Integer)
+    respond cakes, model: [cakeCount: cakes?.size()]
+  }
+
+  //TODO move to service?
+  private List<Cake> getVisibleCakes(Long ownerId = null) {
+    return Cake.createCriteria().list {
+      or {
+        if (ownerId) {
+          eq('ownerId', ownerId)
+        }
+        eq('isPublic', true)
+      }
+    } as List<Cake>
+  }
+
+  def show(Cake cake) {
+    respond cake
+  }
+
+  def create() {
+    //TODO ownerID shouldn't be visible params.ownerId = session['loggedUser']
+    respond new Cake(params)
+  }
+
+  @Transactional
+  def save(Cake cake) {
+    if (cake == null) {
+      transactionStatus.setRollbackOnly()
+      notFound()
+      return
     }
 
-    def show(Cake cake) {
-        respond cake
+    if (cake.hasErrors()) {
+      transactionStatus.setRollbackOnly()
+      respond cake.errors, view: 'create'
+      return
     }
 
-    def create() {
-        respond new Cake(params)
+    cake.save flush: true
+
+    request.withFormat {
+      form multipartForm {
+        flash.message = message(code: 'default.created.message', args: [message(code: 'cake.label', default: 'Cake'), cake.id])
+        redirect cake
+      }
+      '*' { respond cake, [status: CREATED] }
+    }
+  }
+
+  def edit(Cake cake) {
+    respond cake
+  }
+
+  @Transactional
+  def update(Cake cake) {
+    if (cake == null) {
+      transactionStatus.setRollbackOnly()
+      notFound()
+      return
     }
 
-    @Transactional
-    def save(Cake cake) {
-        if (cake == null) {
-            transactionStatus.setRollbackOnly()
-            notFound()
-            return
-        }
-
-        if (cake.hasErrors()) {
-            transactionStatus.setRollbackOnly()
-            respond cake.errors, view:'create'
-            return
-        }
-
-        cake.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'cake.label', default: 'Cake'), cake.id])
-                redirect cake
-            }
-            '*' { respond cake, [status: CREATED] }
-        }
+    if (cake.hasErrors()) {
+      transactionStatus.setRollbackOnly()
+      respond cake.errors, view: 'edit'
+      return
     }
 
-    def edit(Cake cake) {
-        respond cake
+    cake.save flush: true
+
+    request.withFormat {
+      form multipartForm {
+        flash.message = message(code: 'default.updated.message', args: [message(code: 'cake.label', default: 'Cake'), cake.id])
+        redirect cake
+      }
+      '*' { respond cake, [status: OK] }
+    }
+  }
+
+  @Transactional
+  def delete(Cake cake) {
+
+    if (cake == null) {
+      transactionStatus.setRollbackOnly()
+      notFound()
+      return
     }
 
-    @Transactional
-    def update(Cake cake) {
-        if (cake == null) {
-            transactionStatus.setRollbackOnly()
-            notFound()
-            return
-        }
+    cake.delete flush: true
 
-        if (cake.hasErrors()) {
-            transactionStatus.setRollbackOnly()
-            respond cake.errors, view:'edit'
-            return
-        }
-
-        cake.save flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'cake.label', default: 'Cake'), cake.id])
-                redirect cake
-            }
-            '*'{ respond cake, [status: OK] }
-        }
+    request.withFormat {
+      form multipartForm {
+        flash.message = message(code: 'default.deleted.message', args: [message(code: 'cake.label', default: 'Cake'), cake.id])
+        redirect action: "index", method: "GET"
+      }
+      '*' { render status: NO_CONTENT }
     }
+  }
 
-    @Transactional
-    def delete(Cake cake) {
-
-        if (cake == null) {
-            transactionStatus.setRollbackOnly()
-            notFound()
-            return
-        }
-
-        cake.delete flush:true
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'cake.label', default: 'Cake'), cake.id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
+  protected void notFound() {
+    request.withFormat {
+      form multipartForm {
+        flash.message = message(code: 'default.not.found.message', args: [message(code: 'cake.label', default: 'Cake'), params.id])
+        redirect action: "index", method: "GET"
+      }
+      '*' { render status: NOT_FOUND }
     }
-
-    protected void notFound() {
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'cake.label', default: 'Cake'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
+  }
 }
