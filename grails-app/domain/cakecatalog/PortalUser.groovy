@@ -8,6 +8,8 @@ class PortalUser {
   String password
 
   static constraints = {
+    email blank: false
+    password blank: false, password: true
   }
 
   static mapping = {

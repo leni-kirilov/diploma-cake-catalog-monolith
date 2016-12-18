@@ -11,6 +11,7 @@
             <ul>
                 <li><g:link controller="login" action="logout"><g:message code="Logout"/></g:link></li>
                 <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
+                <li><g:link class="edit" action="edit" controller="portalUser" resource="${session['loggedUser']}">Edit profile</g:link></li>
             </ul>
         </div>
         <div id="list-cake" class="content scaffold-list" role="main">
@@ -18,7 +19,8 @@
             <g:if test="${flash.message}">
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <f:table collection="${cakeList}" />
+
+            <f:table collection="${cakeList}" properties="${['name', 'description']}" />
 
             <div class="pagination">
                 <g:paginate total="${cakeCount ?: 0}" />
