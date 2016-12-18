@@ -12,6 +12,8 @@ class CakeController extends BaseController{
 
   static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+  //TODO 4) show OwnerName -> show owner but without edit
+
   def index(Integer max) {
     PortalUser loggedUser = session['loggedUser']
     if(!loggedUser){
@@ -39,12 +41,12 @@ class CakeController extends BaseController{
   }
 
   def create() {
-    //TODO ownerID shouldn't be visible params.ownerId = session['loggedUser']
     respond new Cake(params)
   }
 
   @Transactional
   def save(Cake cake) {
+    cake.ownerId = session['loggedUser'].id
     if (cake == null) {
       transactionStatus.setRollbackOnly()
       notFound()
@@ -74,6 +76,7 @@ class CakeController extends BaseController{
 
   @Transactional
   def update(Cake cake) {
+    cake.ownerId = session['loggedUser'].id
     if (cake == null) {
       transactionStatus.setRollbackOnly()
       notFound()

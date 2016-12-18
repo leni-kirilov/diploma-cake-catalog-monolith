@@ -14,12 +14,10 @@
 
     <h2>Login</h2>
     <g:form action="login" controller="login">
-      <g:textField name="email">Enter  username/email :</g:textField>
-      <g:textField name="password">Enter password:</g:textField>
+      <g:textField name="email" value="Enter email"/>
+      <g:passwordField name="password" value="Enter password"/>
       <g:submitButton name="login"/>
     </g:form>
-
-    %{--TODO mask password--}%
 
     <h2>Registration</h2>
     <g:link controller="portalUser" action="create">Not registered yet? Register a new user</g:link>

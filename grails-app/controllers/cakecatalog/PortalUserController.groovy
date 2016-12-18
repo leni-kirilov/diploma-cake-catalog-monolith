@@ -1,7 +1,10 @@
 package cakecatalog
 
-import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+
+import static org.springframework.http.HttpStatus.CREATED
+import static org.springframework.http.HttpStatus.NOT_FOUND
+import static org.springframework.http.HttpStatus.OK
 
 @Transactional(readOnly = true)
 class PortalUserController {
@@ -38,6 +41,42 @@ class PortalUserController {
                 redirect portalUser
             }
             '*' { respond portalUser, [status: CREATED] }
+        }
+    }
+
+    def edit(PortalUser portalUser) {
+      if (session['loggedUser']?.id == portalUser?.id) {
+        respond portalUser
+      } else {
+        redirect(
+          action: 'login',
+          controller: 'login',
+        )
+      }
+    }
+
+    @Transactional
+    def update(PortalUser portalUser) {
+        if (portalUser == null) {
+            transactionStatus.setRollbackOnly()
+            notFound()
+            return
+        }
+
+        if (portalUser.hasErrors()) {
+            transactionStatus.setRollbackOnly()
+            respond portalUser.errors, view:'edit'
+            return
+        }
+
+        portalUser.save flush:true
+
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'portalUser.label', default: 'PortalUser'), portalUser.id])
+                redirect portalUser
+            }
+            '*'{ respond portalUser, [status: OK] }
         }
     }
 

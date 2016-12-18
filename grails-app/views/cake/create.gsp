@@ -11,6 +11,7 @@
             <ul>
                 <li><g:link controller="login" action="logout"><g:message code="Logout"/></g:link></li>
                 <li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
+                <li><g:link class="edit" controller="portalUser" action="edit" resource="${session['loggedUser']}">Edit profile</g:link></li>
             </ul>
         </div>
         <div id="create-cake" class="content scaffold-create" role="main">
@@ -27,7 +28,7 @@
             </g:hasErrors>
             <g:form action="save">
                 <fieldset class="form">
-                    <f:all bean="cake"/>
+                    <f:all bean="cake" except="ownerId"/>
                 </fieldset>
                 <fieldset class="buttons">
                     <g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />

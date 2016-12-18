@@ -24,9 +24,15 @@
                 </g:eachError>
             </ul>
             </g:hasErrors>
+
             <g:form action="save">
                 <fieldset class="form">
-                    <f:all bean="portalUser"/>
+                    <f:field bean="portalUser" name="name" required="true" property="name"/>
+                    <f:field bean="portalUser" name="email" required="true" property="email"/>
+                    <f:field bean="portalUser" property="password" required="true" >
+                        <g:passwordField name="password"/>
+                    </f:field>
+
                 </fieldset>
                 <fieldset class="buttons">
                     <g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" />
