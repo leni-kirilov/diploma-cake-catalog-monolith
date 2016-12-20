@@ -7,12 +7,10 @@ import spock.lang.*
 @Mock(Cake)
 class CakeControllerSpec extends Specification {
 
-//    static long id = 1
-
     def populateValidParams(params) {
+
         assert params != null
 
-//        params["id"] = id++
         params["name"] = 'Chocolate cake'
         params["description"] = 'This cake consists of many choco flakes'
         params["isPublic"] = false
@@ -21,12 +19,15 @@ class CakeControllerSpec extends Specification {
 
     void "Test the index action returns the correct model"() {
 
+        given:
+            session['loggedUser'] = new PortalUser(id: 1)
+
         when:"The index action is executed"
             controller.index()
 
         then:"The model is correct"
             !model.cakeList
-            model.cakeCount == null
+            model.cakeCount == 0
     }
 
     void "Test the create action returns the correct model"() {

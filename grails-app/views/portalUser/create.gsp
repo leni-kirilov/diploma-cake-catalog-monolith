@@ -7,15 +7,17 @@
     </head>
     <body>
         <a href="#create-portalUser" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
+
         <div class="nav" role="navigation">
             <ul>
                 <li><g:link controller="login" action="logout"><g:message code="Home"/></g:link></li>
             </ul>
         </div>
+
         <div id="create-portalUser" class="content scaffold-create" role="main">
             <h1><g:message code="default.create.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
-            <div class="message" role="status">${flash.message}</div>
+                <div class="message" role="status">${flash.message}</div>
             </g:if>
             <g:hasErrors bean="${this.portalUser}">
             <ul class="errors" role="alert">

@@ -30,7 +30,7 @@
             <g:form resource="${this.cake}" method="PUT">
                 <g:hiddenField name="version" value="${this.cake?.version}" />
                 <fieldset class="form">
-                    <f:all bean="cake"/>
+                    <f:all bean="cake" except="ownerId"/>
                 </fieldset>
                 <fieldset class="buttons">
                     <input class="save" type="submit" value="${message(code: 'default.button.update.label', default: 'Update')}" />
