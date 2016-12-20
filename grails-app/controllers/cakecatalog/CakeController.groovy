@@ -8,18 +8,11 @@ import static org.springframework.http.HttpStatus.NO_CONTENT
 import static org.springframework.http.HttpStatus.OK
 
 @Transactional(readOnly = true)
-class CakeController extends BaseController{
-
-  static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+class CakeController{
 
   //TODO 4) show OwnerName -> show owner but without edit
 
   def index(Integer max) {
-    PortalUser loggedUser = session['loggedUser']
-    if(!loggedUser){
-      redirect uri: '/' //TODO no such email/password; 404
-      return
-    }
     List<Cake> cakes = getVisibleCakes(session['loggedUser'].id as Integer)
     respond cakes, model: [cakeCount: cakes?.size()]
   }

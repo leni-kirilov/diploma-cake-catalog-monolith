@@ -5,8 +5,6 @@ import grails.transaction.Transactional
 @Transactional(readOnly = true)
 class LoginController {
 
-  static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-
   def login() {
     if (session['loggedUser']) {
       redirect(
@@ -16,8 +14,9 @@ class LoginController {
       return
     }
 
-    if (!params.email /*|| !params.password*/) {
-      redirect uri: '/' //TODO no such email/password; 404
+    if (!params.email /*TODO || !params.password*/) {
+      flash.message = "Email or password are empty"
+      redirect uri: '/'
       return
     }
 
@@ -31,6 +30,7 @@ class LoginController {
   }
 
   def logout() {
+    flash.message = "You have logged out"
     session.removeAttribute('loggedUser')
     redirect uri: '/'
   }
