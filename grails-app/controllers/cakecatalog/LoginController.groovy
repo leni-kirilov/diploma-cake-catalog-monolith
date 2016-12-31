@@ -1,9 +1,12 @@
 package cakecatalog
 
+import com.cakecatalog.srv.auth.client.*
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class LoginController {
+
+  AuthClient authClient
 
   def login() {
     if (session['loggedUser']) {
@@ -14,8 +17,14 @@ class LoginController {
       return
     }
 
-    if (!params.email /*TODO || !params.password*/) {
+    if (!params.email || !params.password) {
       flash.message = "Email or password are empty"
+      redirect uri: '/'
+      return
+    }
+
+    if (!authClient.login(new AuthClient.LoginRequest(params.email, params.password))) {
+      flash.message = "Wrong username or password"
       redirect uri: '/'
       return
     }
