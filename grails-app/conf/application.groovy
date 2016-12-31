@@ -1,5 +1,5 @@
 environments {
-  production {
+  production1 {
     dataSource {
       driverClassName = "org.postgresql.Driver"
       dialect = org.hibernate.dialect.PostgreSQL94Dialect
