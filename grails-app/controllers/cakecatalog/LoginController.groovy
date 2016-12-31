@@ -1,6 +1,8 @@
 package cakecatalog
 
 import com.cakecatalog.srv.auth.client.*
+import com.cakecatalog.srv.auth.client.model.LoginRequest
+import com.cakecatalog.srv.auth.client.model.PortalUserResponse
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
@@ -23,14 +25,14 @@ class LoginController {
       return
     }
 
-    if (!authClient.login(new AuthClient.LoginRequest(params.email, params.password))) {
+    PortalUserResponse loggedUser = authClient.login(new LoginRequest(params.email, params.password))
+    if (!loggedUser) {
       flash.message = "Wrong username or password"
       redirect uri: '/'
       return
     }
 
-    PortalUser loggedUser = PortalUser.findByEmail(params.email)
-    session['loggedUser'] = loggedUser
+    session['loggedUser'] = PortalUser.get(loggedUser.id)
 
     redirect(
       action: 'index',

@@ -9,7 +9,9 @@
         <a href="#edit-portalUser" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
         <div class="nav" role="navigation">
             <ul>
-                <li><g:link controller="login" action="logout"><g:message code="Home"/></g:link></li>
+                <li><g:link controller="login" action="logout"><g:message code="Logout"/></g:link></li>
+                <li><g:link controller="cake" class="list" action="index"><g:message code="default.list.label" args="['Cake']" /></g:link></li>
+                <li><g:link controller="cake" class="create" action="create"><g:message code="default.new.label" args="['Cake']" /></g:link></li>
             </ul>
         </div>
         <div id="edit-portalUser" class="content scaffold-edit" role="main">
