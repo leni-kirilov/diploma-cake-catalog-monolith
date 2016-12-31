@@ -86,10 +86,6 @@ assets {
     minifyCss = true
 }
 
-task listJars << {
-    configurations.compile.each { File file -> println file.name }
-}
-
 //needed for Heroku deployments
 task stage() {
     dependsOn clean, war
