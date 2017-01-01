@@ -35,6 +35,8 @@ dependencyManagement {
 
 dependencies {
     compile files('server/cake-catalog-auth-client-0.0.1-SNAPSHOT.jar')
+    compile 'org.apache.httpcomponents:httpclient:4.4.1'
+    compile 'org.springframework:spring-web:4.3.5.RELEASE'
 
     compile "org.springframework.boot:spring-boot-starter-logging"
     compile "org.springframework.boot:spring-boot-autoconfigure"

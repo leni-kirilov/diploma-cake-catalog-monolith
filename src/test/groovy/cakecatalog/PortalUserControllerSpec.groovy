@@ -57,12 +57,13 @@ class PortalUserControllerSpec extends Specification {
         when:"The show action is executed with a null domain"
             controller.show(null)
 
-        then:"A 404 error is returned"
-            response.status == 404
+        then:"A redirect to main page is expected"
+            response.redirectedUrl == null
 
         when:"A domain instance is passed to the show action"
             populateValidParams(params)
             def portalUser = new PortalUser(params)
+            session['loggedUser'] = portalUser
             controller.show(portalUser)
 
         then:"A model is populated containing the domain instance"
