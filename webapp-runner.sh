@@ -11,4 +11,4 @@ java -jar ../../server/liquibase-core-3.5.3.jar \
 echo ''
 echo 'Running app...'
 
-java $JAVA_OPTS -Dgrails.env=prod -jar ../../server/webapp-runner.jar --port $PORT *.war
+java $JAVA_OPTS -javaagent:../../server/newrelic/newrelic.jar -Dnewrelic.environment=production -Dgrails.env=prod -jar ../../server/webapp-runner.jar --port $PORT *.war
