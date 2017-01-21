@@ -20,7 +20,7 @@ class LoginController {
     }
 
     if (!params.email || !params.password) {
-      flash.message = "Email or password are empty"
+      flash.message += "Email or password are empty"
       redirect uri: '/'
       return
     }
@@ -32,7 +32,7 @@ class LoginController {
       return
     }
 
-    session['loggedUser'] = PortalUser.get(loggedUser.id)
+    session['loggedUser'] = loggedUser
 
     redirect(
       action: 'index',

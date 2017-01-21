@@ -15,21 +15,17 @@
             </ul>
         </div>
         <div id="edit-portalUser" class="content scaffold-edit" role="main">
-            <h1><g:message code="default.edit.label" args="[entityName]" /></h1>
+            <h1><g:message code="default.edit.label" args="[entityName]" /> with email [${this.portalUser.email}]</h1>
             <g:if test="${flash.message}">
             <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <g:hasErrors bean="${this.portalUser}">
-            <ul class="errors" role="alert">
-                <g:eachError bean="${this.portalUser}" var="error">
-                <li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
-                </g:eachError>
-            </ul>
-            </g:hasErrors>
+
             <g:form resource="${this.portalUser}" method="PUT">
-                <g:hiddenField name="version" value="${this.portalUser?.version}" />
                 <fieldset class="form">
-                    <f:all bean="portalUser" except="id,email"/>
+                    <f:field property="name" value="${this.portalUser?.name}"/>
+                    <f:field property="password" required="true" >
+                      <g:passwordField name="password"/>
+                    </f:field>
                 </fieldset>
                 <fieldset class="buttons">
                     <input class="save" type="submit" value="${message(code: 'default.button.update.label', default: 'Update')}" />
