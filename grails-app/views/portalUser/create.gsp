@@ -27,7 +27,7 @@
             </ul>
             </g:hasErrors>
 
-            <g:form action="save">
+            <g:form action="save" controller="portalUser">
                 <fieldset class="form">
                     <f:field bean="portalUser" name="name" required="true" property="name"/>
                     <f:field bean="portalUser" name="email" required="true" property="email"/>

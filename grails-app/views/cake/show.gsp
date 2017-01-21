@@ -12,7 +12,7 @@
                 <li><g:link controller="login" action="logout"><g:message code="Logout"/></g:link></li>
                 <li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
                 <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-                <li><g:link class="edit" action="edit" controller="portalUser" resource="${session['loggedUser']}">Edit profile</g:link></li>
+                <li><g:link class="edit" action="edit" controller="portalUser" id="${session['loggedUser'].id}" >Edit profile</g:link></li>
             </ul>
         </div>
         <div id="show-cake" class="content scaffold-show" role="main">
@@ -20,7 +20,7 @@
             <g:if test="${flash.message}">
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <f:display bean="cake" />
+            <f:display bean="cake"  />
             <g:form resource="${this.cake}" method="DELETE">
                 <fieldset class="buttons">
                     <g:if test="${session['loggedUser'].id == this.cake.ownerId }">

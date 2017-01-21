@@ -4,7 +4,6 @@ import com.cakecatalog.srv.auth.client.AuthClient
 import com.cakecatalog.srv.auth.client.model.PortalUserResponse
 import grails.validation.ValidationErrors
 
-import static org.springframework.http.HttpStatus.CREATED
 import static org.springframework.http.HttpStatus.NOT_FOUND
 import static org.springframework.http.HttpStatus.OK
 
@@ -25,7 +24,7 @@ class PortalUserController {
   }
 
   def create() {
-    respond new PortalUser(params)
+    respond new PortalUser()
   }
 
   def save(PortalUser portalUser) {
@@ -40,13 +39,11 @@ class PortalUserController {
       createdPortalUser = authClient.createPortalUser(portalUser.name, portalUser.email, portalUser.password)
       portalUser.id = createdPortalUser.id
 
-      request.withFormat {
-        form multipartForm {
-          flash.message = message(code: 'default.created.message', args: [message(code: 'portalUser.label', default: 'PortalUser'), portalUser.id])
-          redirect portalUser
-        }
-        '*' { respond portalUser, [status: CREATED] }
-      }
+      flash.message = "New user created"
+      redirect(
+        action: 'index',
+        controller: 'cake',
+      )
 
     } catch (Exception e) {
       log.info e
@@ -55,16 +52,22 @@ class PortalUserController {
     }
   }
 
-  def edit(PortalUser portalUser) {
-    if (session['loggedUser']?.id == portalUser?.id) {
-      respond portalUser
+  def edit(Long id) {
+    log.info "Editting user with id: [$id]..."
+
+    if (session['loggedUser']?.id == id) {
+      respond convertToPortalUser(session['loggedUser'] as PortalUserResponse)
     } else {
-      flash.message = "Cannot view this page as you don't own it. Your logged user${session['loggedUser']} vs required: ${portalUser?.id}"
+      flash.message = "Cannot view this page as you don't own it. Your logged user ${session['loggedUser']} vs required: $id"
       redirect(
         action: 'index',
         controller: 'cake',
       )
     }
+  }
+
+  private static PortalUser convertToPortalUser(PortalUserResponse apiUser){
+    new PortalUser(name: apiUser.name, id: apiUser.id, email: apiUser.email)
   }
 
   def update(PortalUser portalUser) {
@@ -73,8 +76,8 @@ class PortalUserController {
       return
     }
 
-    authClient.updatePortalUser(portalUser.id, portalUser.name, portalUser.password)
-    portalUser.refresh()
+    PortalUserResponse updatedPortalUser = authClient.updatePortalUser(portalUser.id, portalUser.name, portalUser.password)
+    session['loggedUser'] = updatedPortalUser
 
     request.withFormat {
       form multipartForm {

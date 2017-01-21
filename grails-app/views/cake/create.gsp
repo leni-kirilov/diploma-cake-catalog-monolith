@@ -11,7 +11,7 @@
             <ul>
                 <li><g:link controller="login" action="logout"><g:message code="Logout"/></g:link></li>
                 <li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-                <li><g:link class="edit" controller="portalUser" action="edit" resource="${session['loggedUser']}">Edit profile</g:link></li>
+                <li><g:link class="edit"  action="edit" controller="portalUser" id="${session['loggedUser'].id}" >Edit profile</g:link></li>
             </ul>
         </div>
         <div id="create-cake" class="content scaffold-create" role="main">

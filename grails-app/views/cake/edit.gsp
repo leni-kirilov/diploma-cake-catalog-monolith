@@ -12,7 +12,7 @@
                 <li><g:link controller="login" action="logout"><g:message code="Logout"/></g:link></li>
                 <li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
                 <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-                <li><g:link class="edit" action="edit" controller="portalUser" resource="${session['loggedUser']}">Edit profile</g:link></li>
+                <li><g:link class="edit" action="edit" controller="portalUser" id="${session['loggedUser'].id}" >Edit profile</g:link></li>
             </ul>
         </div>
         <div id="edit-cake" class="content scaffold-edit" role="main">

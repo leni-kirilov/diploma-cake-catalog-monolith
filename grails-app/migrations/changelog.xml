@@ -62,4 +62,14 @@
     </addColumn>
   </changeSet>
 
+  <changeSet id="Remove portal user" author="Leni.Kirilov">
+
+    <preConditions onFail="MARK_RAN">
+      <tableExists tableName="portal_user"/>
+    </preConditions>
+
+    <dropTable tableName="portal_user"/>
+
+  </changeSet>
+
 </databaseChangeLog>
