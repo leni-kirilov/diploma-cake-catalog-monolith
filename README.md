@@ -1,4 +1,5 @@
 # Cake-Catalog-monolith
+My diploma project from 2016. To be used in combination with https://github.com/leni-kirilov/diploma-cake-catalog-auth
 
 This is the monolithic application for registering a user and creating cakes in a catalog
 
